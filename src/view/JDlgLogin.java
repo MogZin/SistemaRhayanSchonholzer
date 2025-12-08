@@ -100,7 +100,7 @@ public class JDlgLogin extends javax.swing.JDialog {
         jLabel2.setDisplayedMnemonic('s');
         jLabel2.setText("Senha");
 
-        jBtnEntrar.setText("Entrar");
+        jBtnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login.png"))); // NOI18N
         jBtnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnEntrarActionPerformed(evt);

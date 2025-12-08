@@ -51,6 +51,34 @@ public class UsuariosDAO extends AbstractDAO {
         return lista;
     }
 
+    public Object listNome(String nome) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(RpsUsuarios.class);
+        criteria.add(Restrictions.like("rpsNome", "%" + nome + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listApelido(String apelido) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(RpsUsuarios.class);
+        criteria.add(Restrictions.like("rpsApelido", "%" + apelido + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listNomeApelido(String nome, String apelido) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(RpsUsuarios.class);
+        criteria.add(Restrictions.like("rpsNome", "%" + nome + "%"));
+        criteria.add(Restrictions.like("rpsApelido", "%" + apelido + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
     public RpsUsuarios verificarLogin(String apelido, String senha) {
         try {
             session.beginTransaction();

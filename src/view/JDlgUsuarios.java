@@ -204,7 +204,7 @@ public class JDlgUsuarios extends javax.swing.JDialog {
         });
 
         jLabel4.setDisplayedMnemonic('c');
-        jLabel4.setText("Cpf");
+        jLabel4.setText("CPF");
 
         jLabel5.setDisplayedMnemonic('d');
         jLabel5.setText("Data de Nascimento");

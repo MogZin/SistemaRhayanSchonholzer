@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view;
 
-import bean.Produtos;
+import bean.RpsProdutos;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -30,13 +26,13 @@ public class ControllerConsultasProdutos extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Produtos produtos = (Produtos) lstProdutos.get(rowIndex);
+        RpsProdutos rpsProdutos = (RpsProdutos) lstProdutos.get(rowIndex);
         if (columnIndex == 0) {
-            return produtos.getIdprodutos();
+            return rpsProdutos.getRpsIdJogo();
         } else if (columnIndex == 1) {
-            return produtos.getNome();
+            return rpsProdutos.getRpsNome();
         } else if (columnIndex == 2) {
-            return produtos.getValorUnitario();
+            return rpsProdutos.getRpsValor();
         }
         return "";
     }

@@ -142,9 +142,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="jBtnOk1">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/img1/alterar_1.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="IMPRIMIR"/>
       </Properties>
       <Events>

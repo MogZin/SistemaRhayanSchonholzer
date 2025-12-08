@@ -1,21 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package view;
 
-import bean.Usuarios;
 import dao.ProdutosDAO;
-import dao.UsuariosDAO;
 import java.util.ArrayList;
 import java.util.List;
 import tools.Util;
-import view.JDlgUsuarios;
 
-/**
- *
- * @author Marcos
- */
 public class JDlgConsultaProdutos extends javax.swing.JDialog {
 
     ControllerConsultasProdutos controllerConsultasProdutos;
@@ -24,7 +13,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Usuários");
+        setTitle("Consultar Produtos");
         controllerConsultasProdutos = new ControllerConsultasProdutos();
         ProdutosDAO produtosDAO = new ProdutosDAO();
         List lista = new ArrayList();
@@ -89,7 +78,6 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
             }
         });
 
-        jBtnOk1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/alterar_1.png"))); // NOI18N
         jBtnOk1.setText("IMPRIMIR");
         jBtnOk1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

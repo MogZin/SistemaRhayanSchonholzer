@@ -244,7 +244,7 @@
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="displayedMnemonic" type="int" value="99"/>
-        <Property name="text" type="java.lang.String" value="Cpf"/>
+        <Property name="text" type="java.lang.String" value="CPF"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">

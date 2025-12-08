@@ -12,9 +12,122 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import tools.Util;
 import dao.ProdutosDAO;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 public class JDlgProdutos extends javax.swing.JDialog {
 
+    class ImageComboBoxRenderer extends JLabel implements ListCellRenderer<String> {
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends String> list,
+                String value, int index,
+                boolean isSelected,
+                boolean cellHasFocus) {
+
+            // ESSA É A LINHA IMPORTANTE - Verifica se value não é null
+            if (value == null) {
+                setText("");
+                setIcon(null);
+                return this;
+            }
+
+            setText(value);
+
+            try {
+                // Define o ícone baseado no texto - com try-catch para evitar erros
+                if (value.toLowerCase().contains("simulação")) {
+                    setIcon(carregarIcone("/img/simulação.png"));
+                } else if (value.toLowerCase().contains("aventura")) {
+                    setIcon(carregarIcone("/img/aventura.png"));
+                } else if (value.toLowerCase().contains("mmo")) {
+                    setIcon(carregarIcone("/img/mmo.png"));
+                } else if (value.toLowerCase().contains("stealth")) {
+                    setIcon(carregarIcone("/img/stealth.png"));
+                } else if (value.toLowerCase().contains("puzzle")) {
+                    setIcon(carregarIcone("/img/puzzle.png"));
+                } else if (value.toLowerCase().contains("sandbox")) {
+                    setIcon(carregarIcone("/img/sandbox.png"));
+                } else if (value.toLowerCase().contains("moba")) {
+                    setIcon(carregarIcone("/img/moba.png"));
+                } else if (value.toLowerCase().contains("battle royale")) {
+                    setIcon(carregarIcone("/img/battle.png"));
+                } else if (value.toLowerCase().contains("ação")) {
+                    setIcon(carregarIcone("/img/acao.png"));
+                } else if (value.toLowerCase().contains("estratégia")) {
+                    setIcon(carregarIcone("/img/estratégia.png"));
+                } else if (value.toLowerCase().contains("esportes")) {
+                    setIcon(carregarIcone("/img/esportes.png"));
+                } else if (value.toLowerCase().contains("rpg")) {
+                    setIcon(carregarIcone("/img/rpg.png"));
+                } else if (value.toLowerCase().contains("corrida")) {
+                    setIcon(carregarIcone("/img/corrida.png"));
+                } else if (value.toLowerCase().contains("tiro") || value.toLowerCase().contains("shooter")) {
+                    setIcon(carregarIcone("/img/tiro.png"));
+                } else if (value.toLowerCase().contains("terror") || value.toLowerCase().contains("horror")) {
+                    setIcon(carregarIcone("/img/terror.png"));
+                } else if (value.toLowerCase().contains("luta") || value.toLowerCase().contains("fighting")) {
+                    setIcon(carregarIcone("/img/luta.png"));
+                } else if (value.toLowerCase().contains("pc")) {
+                    setIcon(carregarIcone("/img/pc.png"));
+                } else if (value.toLowerCase().contains("console")) {
+                    setIcon(carregarIcone("/img/console.png"));
+                } else if (value.toLowerCase().contains("mobile")) {
+                    setIcon(carregarIcone("/img/mobile.png"));
+                } else if (value.toLowerCase().contains("plataforma")) {
+                    setIcon(carregarIcone("/img/platform.png"));
+                } else if (value.toLowerCase().contains("navegador")) {
+                    setIcon(carregarIcone("/img/navegador.png"));
+                } else if (value.toLowerCase().contains("arcade")) {
+                    setIcon(carregarIcone("/img/arcade.png"));
+                } else if (value.toLowerCase().contains("vr")) {
+                    setIcon(carregarIcone("/img/VR.png"));
+                } else if (value.toLowerCase().contains("nuvem")) {
+                    setIcon(carregarIcone("/img/Nuvem.png"));
+                } else if (value.toLowerCase().contains("Cross-Platform (Multiplataforma)")) {
+                    setIcon(carregarIcone("/img/plataform.png"));
+                } else {
+                    // Se não encontrar imagem, não coloca ícone
+                    setIcon(carregarIcone("/img/caixa.png"));
+                }
+            } catch (Exception e) {
+                // Em caso de erro, apenas não mostra ícone
+                setIcon(null);
+            }
+
+            // Configurações visuais
+            if (isSelected) {
+                setBackground(new Color(200, 220, 255));
+                setForeground(Color.BLACK);
+            } else {
+                setBackground(Color.WHITE);
+                setForeground(Color.BLACK);
+            }
+
+            setOpaque(true);
+            setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+            return this;
+        }
+
+        private ImageIcon carregarIcone(String caminho) {
+            try {
+                java.net.URL imgURL = getClass().getResource(caminho);
+                if (imgURL != null) {
+                    ImageIcon icon = new ImageIcon(imgURL);
+                    // Redimensiona para 20x20 pixels
+                    Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                    return new ImageIcon(img);
+                }
+            } catch (Exception e) {
+                // Ignora erro - retorna null
+            }
+            return null;
+        }
+    }
     private boolean incluir;
     private MaskFormatter mascaraDataNasc;
 
@@ -22,6 +135,16 @@ public class JDlgProdutos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        try {
+            rps_jCboGeneroJogo.setRenderer(new ImageComboBoxRenderer());
+            rps_jCboPlataforma.setRenderer(new ImageComboBoxRenderer());
+            // Ajusta a altura dos itens
+            rps_jCboGeneroJogo.setMaximumRowCount(8);
+            rps_jCboPlataforma.setMaximumRowCount(8);
+        } catch (Exception e) {
+            System.err.println("Erro ao configurar combo boxes: " + e.getMessage());
+            // Se der erro, continua sem o renderizador
+        }
         jLabel1.setForeground(Color.BLACK);
         jLabel2.setForeground(Color.BLACK);
         jLabel3.setForeground(Color.BLACK);
@@ -295,10 +418,10 @@ public class JDlgProdutos extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rps_jCboPlataforma, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rps_jCboGeneroJogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4))
-                        .addGap(94, 94, 94)
+                                .addComponent(rps_jCboPlataforma, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addComponent(rps_jCboGeneroJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7)

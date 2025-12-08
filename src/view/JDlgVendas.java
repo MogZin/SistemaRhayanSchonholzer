@@ -20,6 +20,7 @@ import dao.VendasProdutosDAO;
 import dao.VendedorDAO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 
 public class JDlgVendas extends javax.swing.JDialog {
 
@@ -167,6 +168,10 @@ public class JDlgVendas extends javax.swing.JDialog {
         iniciarRelogio("Cadastro de Vendas"); // coloque o nome do usuário logado aqui
     }
 
+    public JTable getjTable1() {
+        return jTable1;
+    }
+
     private void iniciarRelogio(String nomeUsuario) {
         javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
             java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("HH:mm:ss");
@@ -309,6 +314,11 @@ public class JDlgVendas extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         rps_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/incluir.png"))); // NOI18N
@@ -477,13 +487,14 @@ public class JDlgVendas extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rps_jBtnExcluirProd)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rps_jBtnPesquisar)
-                    .addComponent(rps_jBtnCancelar)
-                    .addComponent(rps_jBtnConfirmar)
-                    .addComponent(rps_jBtnExcluir)
-                    .addComponent(rps_jBtnAlterar)
-                    .addComponent(rps_jBtnIncluir))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rps_jBtnExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rps_jBtnPesquisar)
+                        .addComponent(rps_jBtnCancelar)
+                        .addComponent(rps_jBtnConfirmar)
+                        .addComponent(rps_jBtnAlterar)
+                        .addComponent(rps_jBtnIncluir)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -548,13 +559,20 @@ public class JDlgVendas extends javax.swing.JDialog {
             }
         } else {
             vendasDAO.update(rpsVendas);
+            //excluo todos os pedidos produtos do pedido
+            vendasProdutosDAO.deleteProdutos(rpsVendas);
+            //incluo os pedidos produtos
+            for (int ind = 0; ind < jTable1.getRowCount(); ind++) {
+                RpsVendasProdutos rpsVendasProdutos = controllerVenProd.getBean(ind);
+                rpsVendasProdutos.setRpsVendas(rpsVendas);
+                vendasProdutosDAO.insert(rpsVendasProdutos);
+            }
 
+            Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+            Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
+            Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+            controllerVenProd.setList(new ArrayList());
         }
-
-        Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
-        Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
-        Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
-        controllerVenProd.setList(new ArrayList());
     }//GEN-LAST:event_rps_jBtnConfirmarActionPerformed
 
     private void rps_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnCancelarActionPerformed
@@ -573,13 +591,16 @@ public class JDlgVendas extends javax.swing.JDialog {
 
     private void rps_jBtnIncluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnIncluirProdActionPerformed
         JDlgVendasProdutos jDlgVendasProdutos = new JDlgVendasProdutos(null, true);
-        jDlgVendasProdutos.setTelaAnterior(this);
+        jDlgVendasProdutos.setTelaAnterior(this, null);
         jDlgVendasProdutos.setVisible(true);
         calcularTotal(); // ADICIONA AQUI
     }//GEN-LAST:event_rps_jBtnIncluirProdActionPerformed
 
     private void rps_jBtnAlterarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnAlterarProdActionPerformed
+        // TODO add your handling code here:
         JDlgVendasProdutos jDlgVendasProdutos = new JDlgVendasProdutos(null, true);
+        RpsVendasProdutos rpsVendasProdutos = controllerVenProd.getBean(jTable1.getSelectedRow());
+        jDlgVendasProdutos.setTelaAnterior(this, rpsVendasProdutos);
         jDlgVendasProdutos.setVisible(true);
     }//GEN-LAST:event_rps_jBtnAlterarProdActionPerformed
 
@@ -597,6 +618,12 @@ public class JDlgVendas extends javax.swing.JDialog {
     private void rps_jTxtDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rps_jTxtDescontoKeyReleased
         calcularTotal(); // ADICIONA NO FINAL
     }//GEN-LAST:event_rps_jTxtDescontoKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (evt.getClickCount() == 2) {
+            rps_jBtnAlterarProdActionPerformed(null);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

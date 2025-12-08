@@ -9,6 +9,7 @@ import tools.Util;
 public class JDlgVendasProdutos extends javax.swing.JDialog {
 
     JDlgVendas jDlgVendas;
+    boolean incluir;
 
     public JDlgVendasProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,8 +25,15 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
         Util.habilitar(false, rps_jTxtValorUnitario, rps_jTxtTotal);
     }
 
-    public void setTelaAnterior(JDlgVendas jDlgVendas) {
+    public void setTelaAnterior(JDlgVendas jDlgVendas, RpsVendasProdutos rpsVendasProdutos) {
         this.jDlgVendas = jDlgVendas;
+        if (rpsVendasProdutos != null) {
+            incluir = false;
+            rps_jCboProdutos.setSelectedItem(rpsVendasProdutos.getRpsProdutos());
+            rps_jTxtQuantidade.setText(Util.intToStr(rpsVendasProdutos.getRpsQuantidade()));
+        } else {
+            incluir = true;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -151,11 +159,16 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rps_jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnOkActionPerformed
-        RpsVendasProdutos vendasProdutos = new RpsVendasProdutos();
-        vendasProdutos.setRpsProdutos((RpsProdutos) rps_jCboProdutos.getSelectedItem());
-        vendasProdutos.setRpsQuantidade(Util.strToInt(rps_jTxtQuantidade.getText()));
-        vendasProdutos.setRpsValorUnitario(Util.strToDouble(rps_jTxtValorUnitario.getText()));
-        jDlgVendas.controllerVenProd.addBean(vendasProdutos);
+        RpsVendasProdutos rpsVendasProdutos = new RpsVendasProdutos();
+        rpsVendasProdutos.setRpsProdutos((RpsProdutos) rps_jCboProdutos.getSelectedItem());
+        rpsVendasProdutos.setRpsQuantidade(Util.strToInt(rps_jTxtQuantidade.getText()));
+        rpsVendasProdutos.setRpsValorUnitario(Util.strToDouble(rps_jTxtValorUnitario.getText()));
+        if (incluir == true) {
+            jDlgVendas.controllerVenProd.addBean(rpsVendasProdutos);
+        } else {
+            jDlgVendas.controllerVenProd.removeBean(jDlgVendas.getjTable1().getSelectedRow());
+            jDlgVendas.controllerVenProd.addBean(rpsVendasProdutos);
+        }
         setVisible(false);
     }//GEN-LAST:event_rps_jBtnOkActionPerformed
 

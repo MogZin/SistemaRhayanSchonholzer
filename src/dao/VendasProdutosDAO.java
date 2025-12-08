@@ -32,6 +32,20 @@ public class VendasProdutosDAO extends AbstractDAO {
         session.delete(object);
         session.getTransaction().commit();
     }
+     public void deleteProdutos(RpsVendas rpsVendas) {
+        //listar todos os produtos do pedido
+        List lista = (List) listProdutos(rpsVendas);
+        //deleta  a lista acima 
+        session.beginTransaction();
+        for (int i = 0; i < lista.size(); i++) {
+            RpsVendasProdutos rpsVendasProdutos = (RpsVendasProdutos) lista.get(i);
+            //delete(pedidosProdutos);
+            session.flush();
+            session.clear();
+            session.delete(rpsVendasProdutos);
+        }
+        session.getTransaction().commit();
+    }
 
     @Override
     public Object list(int codigo) {

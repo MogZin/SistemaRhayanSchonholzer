@@ -18,9 +18,15 @@ import dao.VendasDAO;
 import dao.ClientesDAO;
 import dao.VendasProdutosDAO;
 import dao.VendedorDAO;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 public class JDlgVendas extends javax.swing.JDialog {
 
@@ -32,6 +38,7 @@ public class JDlgVendas extends javax.swing.JDialog {
     public JDlgVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        configurarAtualizacaoAutomatica();
         setLocationRelativeTo(null);
 
         ClientesDAO clientesDAO = new ClientesDAO();
@@ -205,6 +212,51 @@ public class JDlgVendas extends javax.swing.JDialog {
         rps_jTxtTotal.setText("R$ " + String.format("%,.2f", total));
     }
 
+// Método para configurar os listeners de atualização em tempo real
+    private void configurarAtualizacaoAutomatica() {
+        // Adiciona listener para o campo de desconto
+        rps_jTxtDesconto.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                calcularTotal();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                calcularTotal();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                calcularTotal();
+            }
+
+        });
+
+        // Se a tabela pode ter valores editáveis, adicionar listeners para ela também
+        jTable1.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if ("tableCellEditor".equals(evt.getPropertyName())) {
+                    // Quando a edição de célula terminar
+                    if (!jTable1.isEditing()) {
+                        calcularTotal();
+                    }
+                }
+            }
+
+        });
+
+        // Listener para mudanças no modelo da tabela (adicionar/remover linhas)
+        jTable1.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                calcularTotal();
+            }
+
+        });
+    }
+
     public RpsVendas viewBean() {
         RpsVendas rpsVendas = new RpsVendas();
         rpsVendas.setRpsIdVendas(Util.strToInt(rps_jTxtCodigo.getText()));
@@ -297,6 +349,9 @@ public class JDlgVendas extends javax.swing.JDialog {
             }
         });
         rps_jTxtDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rps_jTxtDescontoKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 rps_jTxtDescontoKeyReleased(evt);
             }
@@ -421,9 +476,9 @@ public class JDlgVendas extends javax.swing.JDialog {
                                 .addComponent(jLabel4)
                                 .addGap(81, 81, 81)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rps_jTxtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel6)
+                            .addComponent(rps_jTxtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(rps_jCboFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -501,7 +556,7 @@ public class JDlgVendas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rps_jTxtDescontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jTxtDescontoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_rps_jTxtDescontoActionPerformed
 
     private void rps_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnIncluirActionPerformed
@@ -567,6 +622,7 @@ public class JDlgVendas extends javax.swing.JDialog {
                 vendasProdutosDAO.insert(rpsVendasProdutos);
             }
         }
+        calcularTotal(); // ADICIONA NO FINAL
         Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jCboVendedor, rps_jCboFormaPagamento);
         Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
         Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
@@ -595,11 +651,14 @@ public class JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_rps_jBtnIncluirProdActionPerformed
 
     private void rps_jBtnAlterarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnAlterarProdActionPerformed
-        // TODO add your handling code here:
+        if (jTable1.getSelectedRow() == -1) {
+            Util.mensagem("Precisa selecionar uma linha!");
+        }
         JDlgVendasProdutos jDlgVendasProdutos = new JDlgVendasProdutos(null, true);
         RpsVendasProdutos rpsVendasProdutos = controllerVenProd.getBean(jTable1.getSelectedRow());
         jDlgVendasProdutos.setTelaAnterior(this, rpsVendasProdutos);
         jDlgVendasProdutos.setVisible(true);
+        calcularTotal(); // ADICIONA NO FINAL
     }//GEN-LAST:event_rps_jBtnAlterarProdActionPerformed
 
     private void rps_jBtnExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnExcluirProdActionPerformed
@@ -622,6 +681,10 @@ public class JDlgVendas extends javax.swing.JDialog {
             rps_jBtnAlterarProdActionPerformed(null);
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void rps_jTxtDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rps_jTxtDescontoKeyPressed
+
+    }//GEN-LAST:event_rps_jTxtDescontoKeyPressed
 
     /**
      * @param args the command line arguments

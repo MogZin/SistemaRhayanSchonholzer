@@ -58,10 +58,10 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="rps_jTxtDesconto" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Component id="rps_jTxtDesconto" min="-2" pref="153" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <Component id="rps_jCboFormaPagamento" min="-2" pref="136" max="-2" attributes="0"/>
@@ -223,6 +223,7 @@
     <Component class="javax.swing.JTextField" name="rps_jTxtDesconto">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rps_jTxtDescontoActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="rps_jTxtDescontoKeyPressed"/>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="rps_jTxtDescontoKeyReleased"/>
       </Events>
     </Component>

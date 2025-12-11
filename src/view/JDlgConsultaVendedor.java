@@ -13,7 +13,7 @@ public class JDlgConsultaVendedor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consultar Vendedores");
+        iniciarRelogio("Consulta de Vendedor"); // coloque o nome do usuário logado aqui
         controllerConsultasVendedor = new ControllerConsultasVendedor();
         VendedorDAO vendedorDAO = new VendedorDAO();
         List lista = new ArrayList();
@@ -62,6 +62,23 @@ public class JDlgConsultaVendedor extends javax.swing.JDialog {
         rps_jTxtSalario.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         rps_jTxtSalario.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
         rps_jTxtSalario.setForeground(new java.awt.Color(34, 139, 34)); // verde "saldo positivo"
+    }
+
+    private void iniciarRelogio(String nomeUsuario) {
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("HH:mm:ss");
+            java.text.SimpleDateFormat sdfData = new java.text.SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy");
+
+            String hora = sdfHora.format(new java.util.Date());
+            String data = sdfData.format(new java.util.Date());
+
+            // Capitaliza o dia da semana
+            data = data.substring(0, 1).toUpperCase() + data.substring(1);
+
+            // Define título com usuário, data e hora
+            setTitle(nomeUsuario + " | " + data + " | " + hora);
+        });
+        timer.start();
     }
 
     /**
@@ -188,7 +205,7 @@ public class JDlgConsultaVendedor extends javax.swing.JDialog {
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            jBtnOkActionPerformed(null);
+            jBtnOk1ActionPerformed(null);
         }
     }//GEN-LAST:event_jTableMouseClicked
 

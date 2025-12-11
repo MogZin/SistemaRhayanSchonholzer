@@ -14,7 +14,7 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     public JFrmPrincipal() {
         initComponents();
-        setTitle("Sistema de Vendas de Jogos");
+        iniciarRelogio("Sistema de Vendas de Jogos"); // coloque o nome do usuário logado aqui
         setExtendedState(MAXIMIZED_BOTH);
 
         try {
@@ -40,6 +40,23 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(background);
         getContentPane().setComponentZOrder(background, getContentPane().getComponentCount() - 1);
+    }
+
+    private void iniciarRelogio(String nomeUsuario) {
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("HH:mm:ss");
+            java.text.SimpleDateFormat sdfData = new java.text.SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy");
+
+            String hora = sdfHora.format(new java.util.Date());
+            String data = sdfData.format(new java.util.Date());
+
+            // Capitaliza o dia da semana
+            data = data.substring(0, 1).toUpperCase() + data.substring(1);
+
+            // Define título com usuário, data e hora
+            setTitle(nomeUsuario + " | " + data + " | " + hora);
+        });
+        timer.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -70,11 +87,11 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         rps_jMnuMovimentos = new javax.swing.JMenu();
         rps_jMnuVendas = new javax.swing.JMenuItem();
         rps_jMnuConsultas = new javax.swing.JMenu();
-        jMnuConsultasClientes = new javax.swing.JMenuItem();
-        jMnuConsultasProdutos = new javax.swing.JMenuItem();
-        jMnuConsultasUsuarios = new javax.swing.JMenuItem();
-        jMnuConsultasVendedores = new javax.swing.JMenuItem();
-        jMnuConsultasVendas = new javax.swing.JMenuItem();
+        rps_jMnuConsultasClientes = new javax.swing.JMenuItem();
+        rps_jMnuConsultasProdutos = new javax.swing.JMenuItem();
+        rps_jMnuConsultasUsuarios = new javax.swing.JMenuItem();
+        rps_jMnuConsultasVendedores = new javax.swing.JMenuItem();
+        rps_jMnuConsultasVendas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -271,60 +288,60 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
         rps_jMnuConsultas.setText("Consultas");
 
-        jMnuConsultasClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMnuConsultasClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/convendedor.png"))); // NOI18N
-        jMnuConsultasClientes.setMnemonic('C');
-        jMnuConsultasClientes.setText("Clientes");
-        jMnuConsultasClientes.addActionListener(new java.awt.event.ActionListener() {
+        rps_jMnuConsultasClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        rps_jMnuConsultasClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/convendedor.png"))); // NOI18N
+        rps_jMnuConsultasClientes.setMnemonic('C');
+        rps_jMnuConsultasClientes.setText("Clientes");
+        rps_jMnuConsultasClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMnuConsultasClientesActionPerformed(evt);
+                rps_jMnuConsultasClientesActionPerformed(evt);
             }
         });
-        rps_jMnuConsultas.add(jMnuConsultasClientes);
+        rps_jMnuConsultas.add(rps_jMnuConsultasClientes);
 
-        jMnuConsultasProdutos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMnuConsultasProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conProdutos.png"))); // NOI18N
-        jMnuConsultasProdutos.setMnemonic('P');
-        jMnuConsultasProdutos.setText("Produtos");
-        jMnuConsultasProdutos.addActionListener(new java.awt.event.ActionListener() {
+        rps_jMnuConsultasProdutos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        rps_jMnuConsultasProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conProdutos.png"))); // NOI18N
+        rps_jMnuConsultasProdutos.setMnemonic('P');
+        rps_jMnuConsultasProdutos.setText("Produtos");
+        rps_jMnuConsultasProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMnuConsultasProdutosActionPerformed(evt);
+                rps_jMnuConsultasProdutosActionPerformed(evt);
             }
         });
-        rps_jMnuConsultas.add(jMnuConsultasProdutos);
+        rps_jMnuConsultas.add(rps_jMnuConsultasProdutos);
 
-        jMnuConsultasUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMnuConsultasUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conusuario.png"))); // NOI18N
-        jMnuConsultasUsuarios.setMnemonic('U');
-        jMnuConsultasUsuarios.setText("Usuários");
-        jMnuConsultasUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        rps_jMnuConsultasUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        rps_jMnuConsultasUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conusuario.png"))); // NOI18N
+        rps_jMnuConsultasUsuarios.setMnemonic('U');
+        rps_jMnuConsultasUsuarios.setText("Usuários");
+        rps_jMnuConsultasUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMnuConsultasUsuariosActionPerformed(evt);
+                rps_jMnuConsultasUsuariosActionPerformed(evt);
             }
         });
-        rps_jMnuConsultas.add(jMnuConsultasUsuarios);
+        rps_jMnuConsultas.add(rps_jMnuConsultasUsuarios);
 
-        jMnuConsultasVendedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMnuConsultasVendedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-consultar-24.png"))); // NOI18N
-        jMnuConsultasVendedores.setMnemonic('V');
-        jMnuConsultasVendedores.setText("Vendedores");
-        jMnuConsultasVendedores.addActionListener(new java.awt.event.ActionListener() {
+        rps_jMnuConsultasVendedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        rps_jMnuConsultasVendedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-consultar-24.png"))); // NOI18N
+        rps_jMnuConsultasVendedores.setMnemonic('V');
+        rps_jMnuConsultasVendedores.setText("Vendedores");
+        rps_jMnuConsultasVendedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMnuConsultasVendedoresActionPerformed(evt);
+                rps_jMnuConsultasVendedoresActionPerformed(evt);
             }
         });
-        rps_jMnuConsultas.add(jMnuConsultasVendedores);
+        rps_jMnuConsultas.add(rps_jMnuConsultasVendedores);
 
-        jMnuConsultasVendas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMnuConsultasVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conempresa.png"))); // NOI18N
-        jMnuConsultasVendas.setMnemonic('V');
-        jMnuConsultasVendas.setText("Vendas");
-        jMnuConsultasVendas.addActionListener(new java.awt.event.ActionListener() {
+        rps_jMnuConsultasVendas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        rps_jMnuConsultasVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/conempresa.png"))); // NOI18N
+        rps_jMnuConsultasVendas.setMnemonic('V');
+        rps_jMnuConsultasVendas.setText("Vendas");
+        rps_jMnuConsultasVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMnuConsultasVendasActionPerformed(evt);
+                rps_jMnuConsultasVendasActionPerformed(evt);
             }
         });
-        rps_jMnuConsultas.add(jMnuConsultasVendas);
+        rps_jMnuConsultas.add(rps_jMnuConsultasVendas);
 
         jMenuBar1.add(rps_jMnuConsultas);
 
@@ -425,30 +442,30 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         jDlgClientes.setVisible(true);
     }//GEN-LAST:event_rps_jBtnCadastrosClientesActionPerformed
 
-    private void jMnuConsultasClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasClientesActionPerformed
+    private void rps_jMnuConsultasClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jMnuConsultasClientesActionPerformed
         JDlgConsultaClientes jDlgConsultaClientes = new JDlgConsultaClientes(this, true);
         jDlgConsultaClientes.setVisible(true);
-    }//GEN-LAST:event_jMnuConsultasClientesActionPerformed
+    }//GEN-LAST:event_rps_jMnuConsultasClientesActionPerformed
 
-    private void jMnuConsultasProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasProdutosActionPerformed
+    private void rps_jMnuConsultasProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jMnuConsultasProdutosActionPerformed
         JDlgConsultaProdutos jDlgConsultaProdutos = new JDlgConsultaProdutos(this, true);
         jDlgConsultaProdutos.setVisible(true);
-    }//GEN-LAST:event_jMnuConsultasProdutosActionPerformed
+    }//GEN-LAST:event_rps_jMnuConsultasProdutosActionPerformed
 
-    private void jMnuConsultasUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasUsuariosActionPerformed
+    private void rps_jMnuConsultasUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jMnuConsultasUsuariosActionPerformed
         JDlgConsultaUsuarios jDlgConsultaUsuarios = new JDlgConsultaUsuarios(this, true);
         jDlgConsultaUsuarios.setVisible(true);
-    }//GEN-LAST:event_jMnuConsultasUsuariosActionPerformed
+    }//GEN-LAST:event_rps_jMnuConsultasUsuariosActionPerformed
 
-    private void jMnuConsultasVendedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasVendedoresActionPerformed
+    private void rps_jMnuConsultasVendedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jMnuConsultasVendedoresActionPerformed
         JDlgConsultaVendedor jDlgConsultaVendedor = new JDlgConsultaVendedor(this, true);
         jDlgConsultaVendedor.setVisible(true);
-    }//GEN-LAST:event_jMnuConsultasVendedoresActionPerformed
+    }//GEN-LAST:event_rps_jMnuConsultasVendedoresActionPerformed
 
-    private void jMnuConsultasVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuConsultasVendasActionPerformed
+    private void rps_jMnuConsultasVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jMnuConsultasVendasActionPerformed
         JDlgConsultaVendas jDlgConsultaVendas = new JDlgConsultaVendas(this, true);
         jDlgConsultaVendas.setVisible(true);
-    }//GEN-LAST:event_jMnuConsultasVendasActionPerformed
+    }//GEN-LAST:event_rps_jMnuConsultasVendasActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -486,11 +503,6 @@ public class JFrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMnuConsultasClientes;
-    private javax.swing.JMenuItem jMnuConsultasProdutos;
-    private javax.swing.JMenuItem jMnuConsultasUsuarios;
-    private javax.swing.JMenuItem jMnuConsultasVendas;
-    private javax.swing.JMenuItem jMnuConsultasVendedores;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
@@ -508,6 +520,11 @@ public class JFrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu rps_jMnuCadastros;
     private javax.swing.JMenuItem rps_jMnuClientes;
     private javax.swing.JMenu rps_jMnuConsultas;
+    private javax.swing.JMenuItem rps_jMnuConsultasClientes;
+    private javax.swing.JMenuItem rps_jMnuConsultasProdutos;
+    private javax.swing.JMenuItem rps_jMnuConsultasUsuarios;
+    private javax.swing.JMenuItem rps_jMnuConsultasVendas;
+    private javax.swing.JMenuItem rps_jMnuConsultasVendedores;
     private javax.swing.JMenu rps_jMnuMovimentos;
     private javax.swing.JMenuItem rps_jMnuProdutos;
     private javax.swing.JMenuItem rps_jMnuSair;

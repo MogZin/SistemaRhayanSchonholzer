@@ -14,7 +14,7 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
     public JDlgVendasProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Vendas produtos");
+        iniciarRelogio("Vendas produtos"); // coloque o nome do usuário logado aqui
         setLocationRelativeTo(null);
         rps_jTxtQuantidade.setText("1");
         ProdutosDAO produtosDAO = new ProdutosDAO();
@@ -23,6 +23,23 @@ public class JDlgVendasProdutos extends javax.swing.JDialog {
             rps_jCboProdutos.addItem((RpsProdutos) object);
         }
         Util.habilitar(false, rps_jTxtValorUnitario, rps_jTxtTotal);
+    }
+
+    private void iniciarRelogio(String nomeUsuario) {
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("HH:mm:ss");
+            java.text.SimpleDateFormat sdfData = new java.text.SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy");
+
+            String hora = sdfHora.format(new java.util.Date());
+            String data = sdfData.format(new java.util.Date());
+
+            // Capitaliza o dia da semana
+            data = data.substring(0, 1).toUpperCase() + data.substring(1);
+
+            // Define título com usuário, data e hora
+            setTitle(nomeUsuario + " | " + data + " | " + hora);
+        });
+        timer.start();
     }
 
     public void setTelaAnterior(JDlgVendas jDlgVendas, RpsVendasProdutos rpsVendasProdutos) {

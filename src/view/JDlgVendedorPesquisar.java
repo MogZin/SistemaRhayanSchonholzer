@@ -14,12 +14,29 @@ public class JDlgVendedorPesquisar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Vendedor");
+        iniciarRelogio("Pesquisar de Vendedores"); // coloque o nome do usuário logado aqui
         controllerVendedor = new ControllerVendedor();
         VendedorDAO vendedorDAO = new VendedorDAO();
         List lista = (List) vendedorDAO.listAll();
         controllerVendedor.setList(lista);
         rps_jTable.setModel(controllerVendedor);
+    }
+
+    private void iniciarRelogio(String nomeUsuario) {
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("HH:mm:ss");
+            java.text.SimpleDateFormat sdfData = new java.text.SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy");
+
+            String hora = sdfHora.format(new java.util.Date());
+            String data = sdfData.format(new java.util.Date());
+
+            // Capitaliza o dia da semana
+            data = data.substring(0, 1).toUpperCase() + data.substring(1);
+
+            // Define título com usuário, data e hora
+            setTitle(nomeUsuario + " | " + data + " | " + hora);
+        });
+        timer.start();
     }
 
     public void setTelaAnterior(JDlgVendedor jDlgVendedor) {

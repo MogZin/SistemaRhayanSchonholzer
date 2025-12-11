@@ -21,6 +21,7 @@ public class JDlgUsuarios extends javax.swing.JDialog {
     public JDlgUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        iniciarRelogio("Cadastro de Usuários"); // coloque o nome do usuário logado aqui
         setLocationRelativeTo(null);
         jLabel1.setForeground(Color.WHITE);
         jLabel2.setForeground(Color.WHITE);
@@ -48,7 +49,7 @@ public class JDlgUsuarios extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(JDlgUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
-        iniciarRelogio("Cadastro de Usuários"); // coloque o nome do usuário logado aqui
+
     }
 
     private void iniciarRelogio(String nomeUsuario) {

@@ -21,7 +21,7 @@ public class JDlgVendedor extends javax.swing.JDialog {
     public JDlgVendedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        iniciarRelogio("Cadastro de Vendedores"); // coloque o nome do usuário logado aqui
         setLocationRelativeTo(null);
         jLabel1.setForeground(Color.WHITE);
         jLabel2.setForeground(Color.WHITE);
@@ -94,7 +94,6 @@ public class JDlgVendedor extends javax.swing.JDialog {
         rps_jTxtSalario.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
         rps_jTxtSalario.setForeground(new java.awt.Color(34, 139, 34)); // verde "saldo positivo"
 
-        iniciarRelogio("Cadastro de Vendedores"); // coloque o nome do usuário logado aqui
     }
 
     public void beanView(RpsVendedor vendedor) {

@@ -38,6 +38,7 @@ public class JDlgVendas extends javax.swing.JDialog {
     public JDlgVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        iniciarRelogio("Cadastro de Vendas"); // coloque o nome do usuário logado aqui
         configurarAtualizacaoAutomatica();
         setLocationRelativeTo(null);
 
@@ -171,7 +172,6 @@ public class JDlgVendas extends javax.swing.JDialog {
         rps_jTxtDesconto.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
         rps_jTxtDesconto.setForeground(new java.awt.Color(34, 139, 34)); // verde "saldo positivo"
 
-        iniciarRelogio("Cadastro de Vendas"); // coloque o nome do usuário logado aqui
     }
 
     public JTable getjTable1() {

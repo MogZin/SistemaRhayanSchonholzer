@@ -134,6 +134,7 @@ public class JDlgProdutos extends javax.swing.JDialog {
     public JDlgProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        iniciarRelogio("Cadastro de Produtos"); // coloque o nome do usuário logado aqui
         setLocationRelativeTo(null);
         try {
             rps_jCboGeneroJogo.setRenderer(new ImageComboBoxRenderer());
@@ -211,7 +212,6 @@ public class JDlgProdutos extends javax.swing.JDialog {
         rps_jFmtValor.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
         rps_jFmtValor.setForeground(new java.awt.Color(34, 139, 34)); // verde "saldo positivo"
 
-        iniciarRelogio("Cadastro de Produtos"); // coloque o nome do usuário logado aqui
     }
 
     private void iniciarRelogio(String nomeUsuario) {

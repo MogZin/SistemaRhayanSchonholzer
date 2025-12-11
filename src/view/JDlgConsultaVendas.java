@@ -16,7 +16,7 @@ public class JDlgConsultaVendas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consultar Clientes");
+        iniciarRelogio("Consulta de Vendas"); // coloque o nome do usuário logado aqui
         controllerConsultasVendas = new ControllerConsultasVendas();
         VendasDAO vendasDAO = new VendasDAO();
         List lista = new ArrayList();
@@ -34,6 +34,24 @@ public class JDlgConsultaVendas extends javax.swing.JDialog {
         for (int i = 0; i < lista2.size(); i++) {
             rps_jCboVendedor.addItem((RpsVendedor) lista2.get(i));
         }
+
+    }
+
+    private void iniciarRelogio(String nomeUsuario) {
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("HH:mm:ss");
+            java.text.SimpleDateFormat sdfData = new java.text.SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy");
+
+            String hora = sdfHora.format(new java.util.Date());
+            String data = sdfData.format(new java.util.Date());
+
+            // Capitaliza o dia da semana
+            data = data.substring(0, 1).toUpperCase() + data.substring(1);
+
+            // Define título com usuário, data e hora
+            setTitle(nomeUsuario + " | " + data + " | " + hora);
+        });
+        timer.start();
     }
 
     /**
@@ -137,9 +155,9 @@ public class JDlgConsultaVendas extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -169,7 +187,7 @@ public class JDlgConsultaVendas extends javax.swing.JDialog {
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            jBtnOkActionPerformed(null);
+            jBtnOk1ActionPerformed(null);
         }
     }//GEN-LAST:event_jTableMouseClicked
 

@@ -12,7 +12,7 @@ public class JDlgConsultaUsuarios extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consultar Produtos");
+        setTitle("Consultar Usuários");
         controllerConsultasUsuarios = new ControllerConsultasUsuarios();
         UsuariosDAO usuariosDAO = new UsuariosDAO();
         List lista = new ArrayList();

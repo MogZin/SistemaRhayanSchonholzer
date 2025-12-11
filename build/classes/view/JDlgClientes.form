@@ -342,7 +342,7 @@
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
         <Property name="displayedMnemonic" type="int" value="103"/>
-        <Property name="text" type="java.lang.String" value="Genero"/>
+        <Property name="text" type="java.lang.String" value="G&#xea;nero"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="rps_jCboGenero">

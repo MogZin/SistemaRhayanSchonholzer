@@ -32,7 +32,7 @@ public class ControllerConsultasClientes extends AbstractTableModel {
         } else if (columnIndex == 1) {
             return rpsClientes.getRpsNome();
         } else if (columnIndex == 2) {
-            return rpsClientes.getRpsCidade();
+            return rpsClientes.getRpsGenero();
         }
         return "";
     }
@@ -44,7 +44,7 @@ public class ControllerConsultasClientes extends AbstractTableModel {
         } else if (columnIndex == 1) {
             return "Nome";
         } else if (columnIndex == 2) {
-            return "Cidade";
+            return "Gênero";
         }
         return "";
     }

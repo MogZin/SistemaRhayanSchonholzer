@@ -42,15 +42,14 @@ Contributor(s):
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        
-        <!--        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/db_rhayan_schonholzer?zeroDateTimeBehavior=convertToNull</property>
-        <property name="hibernate.connection.username">root</property>-->
-        <property name="hibernate.connection.url">
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>       
+        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/db_rhayan_schonholzer?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.username">root</property>
+<!--        <property name="hibernate.connection.url">
             jdbc:mysql://10.7.0.51:33062/db_rhayan_schonholzer?zeroDateTimeBehavior=convertToNull
         </property>
         <property name="hibernate.connection.username">rhayan_schonholzer</property>
-        <property name="hibernate.connection.password">rhayan_schonholzer</property>
+        <property name="hibernate.connection.password">rhayan_schonholzer</property>-->
         <mapping class="bean.RpsUsuarios"/>
         <mapping class="bean.RpsProdutos"/>
         <mapping class="bean.RpsClientes"/>

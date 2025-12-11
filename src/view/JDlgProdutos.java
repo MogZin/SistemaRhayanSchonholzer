@@ -524,7 +524,7 @@ public class JDlgProdutos extends javax.swing.JDialog {
 
     private void rps_jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnAlterarActionPerformed
         if (rps_jTxtCodigoJogo.getText().trim().isEmpty()) {
-            Util.mensagem("Pesquise um usuário antes de Alterar");
+            Util.mensagem("Pesquise um Produto antes de Alterar");
             return;
         }
         Util.habilitar(true, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigoJogo, rps_jTxtNomeJogo, rps_jTxtQuantEstoque, rps_jFmtAnoLançamento, rps_jFmtValor, rps_jCboGeneroJogo, rps_jCboPlataforma);
@@ -542,7 +542,7 @@ public class JDlgProdutos extends javax.swing.JDialog {
 
     private void rps_jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnExcluirActionPerformed
         if (rps_jTxtCodigoJogo.getText().trim().isEmpty()) {
-            Util.mensagem("Pesquise um usuário antes de Excluir");
+            Util.mensagem("Pesquise um Produto antes de Excluir");
             return;
         }
 

@@ -32,7 +32,6 @@ public class JDlgVendas extends javax.swing.JDialog {
     public JDlgVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setTitle("Cadastro de Vendas");
         setLocationRelativeTo(null);
 
         ClientesDAO clientesDAO = new ClientesDAO();
@@ -449,7 +448,7 @@ public class JDlgVendas extends javax.swing.JDialog {
                             .addComponent(rps_jBtnAlterarProd, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addComponent(rps_jBtnExcluirProd, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rps_jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rps_jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -506,9 +505,9 @@ public class JDlgVendas extends javax.swing.JDialog {
     }//GEN-LAST:event_rps_jTxtDescontoActionPerformed
 
     private void rps_jBtnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnIncluirActionPerformed
-        Util.habilitar(true, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+        Util.habilitar(true, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jCboVendedor, rps_jCboFormaPagamento);
         Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
-        Util.habilitar(false, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
+        Util.habilitar(false, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar, rps_jTxtTotal);
         rps_jTxtCodigo.grabFocus();
         incluir = true;
         controllerVenProd.setList(new ArrayList());
@@ -519,7 +518,7 @@ public class JDlgVendas extends javax.swing.JDialog {
             Util.mensagem("Pesquise uma Vendas antes de Alterar");
             return;
         }
-        Util.habilitar(true, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+        Util.habilitar(true, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jCboVendedor, rps_jCboFormaPagamento);
         Util.habilitar(false, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
         Util.habilitar(false, rps_jTxtCodigo);
         rps_jFmtDataVenda.grabFocus();
@@ -568,14 +567,14 @@ public class JDlgVendas extends javax.swing.JDialog {
                 vendasProdutosDAO.insert(rpsVendasProdutos);
             }
         }
-        Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+        Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jCboVendedor, rps_jCboFormaPagamento);
         Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
         Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
         controllerVenProd.setList(new ArrayList());
     }//GEN-LAST:event_rps_jBtnConfirmarActionPerformed
 
     private void rps_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnCancelarActionPerformed
-        Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+        Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jCboVendedor, rps_jCboFormaPagamento);
         Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
         Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
         controllerVenProd.setList(new ArrayList());

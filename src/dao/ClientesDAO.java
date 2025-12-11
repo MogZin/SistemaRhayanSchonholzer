@@ -51,20 +51,20 @@ public class ClientesDAO extends AbstractDAO {
         return lista;
     }
 
-    public Object listCidade(String cidade) {
+    public Object listGenero(int genero) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(RpsClientes.class);
-        criteria.add(Restrictions.like("rpsCidade", "%" + cidade + "%"));
+        criteria.add(Restrictions.eq("rpsGenero", genero));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;
     }
 
-    public Object listNomeCidade(String nome, String cidade) {
+    public Object listNomeGenero(String nome, int genero) {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(RpsClientes.class);
         criteria.add(Restrictions.like("rpsNome", "%" + nome + "%"));
-        criteria.add(Restrictions.like("rpsCidade", "%" + cidade + "%"));
+        criteria.add(Restrictions.eq("rpsGenero", genero));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;

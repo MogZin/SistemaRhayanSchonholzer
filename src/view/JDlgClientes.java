@@ -317,7 +317,7 @@ public class JDlgClientes extends javax.swing.JDialog {
         jLabel7.setText("Data de Cadastro");
 
         jLabel8.setDisplayedMnemonic('g');
-        jLabel8.setText("Genero");
+        jLabel8.setText("Gênero");
 
         rps_jCboGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 

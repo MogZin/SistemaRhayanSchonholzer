@@ -1,6 +1,8 @@
 package dao;
 
+import bean.RpsClientes;
 import bean.RpsVendas;
+import bean.RpsVendedor;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -37,6 +39,34 @@ public class VendasDAO extends AbstractDAO {
         session.beginTransaction();
         Criteria criteria = session.createCriteria(RpsVendas.class);
         criteria.add(Restrictions.eq("rpsIdVendas", codigo));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listCliente(RpsClientes rpsClientes) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(RpsVendas.class);
+        criteria.add(Restrictions.eq("rpsClientes", rpsClientes));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listVendedor(RpsVendedor rpsVendedor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(RpsVendas.class);
+        criteria.add(Restrictions.eq("rpsVendedor", rpsVendedor));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public Object listClienteVendedor(RpsClientes rpsClientes, RpsVendedor rpsVendedor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(RpsVendas.class);
+        criteria.add(Restrictions.eq("rpsClientes", rpsClientes));
+        criteria.add(Restrictions.eq("rpsVendedor", rpsVendedor));
         List lista = criteria.list();
         session.getTransaction().commit();
         return lista;

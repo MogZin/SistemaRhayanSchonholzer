@@ -3,7 +3,6 @@ package view;
 import dao.ClientesDAO;
 import java.util.ArrayList;
 import java.util.List;
-import tools.Util;
 
 public class JDlgConsultaClientes extends javax.swing.JDialog {
 
@@ -13,12 +12,12 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Consultar Produtos");
+        setTitle("Consultar Clientes");
         controllerConsultasClientes = new ControllerConsultasClientes();
         ClientesDAO clientesDAO = new ClientesDAO();
         List lista = new ArrayList();
         controllerConsultasClientes.setList(lista);
-        jTable1.setModel(controllerConsultasClientes);
+        jTable.setModel(controllerConsultasClientes);
     }
 
     /**
@@ -31,18 +30,18 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
-        jTxtCidade = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnConsultar = new javax.swing.JButton();
         jBtnOk1 = new javax.swing.JButton();
+        jCboGenero = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,12 +52,12 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                jTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable);
 
         jBtnOk.setText("OK");
         jBtnOk.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +68,7 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("Cidade");
+        jLabel2.setText("Gênero");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,6 +81,13 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
         jBtnOk1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnOk1ActionPerformed(evt);
+            }
+        });
+
+        jCboGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
+        jCboGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCboGeneroActionPerformed(evt);
             }
         });
 
@@ -106,8 +112,8 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(95, 95, 95)
                                 .addComponent(jBtnConsultar)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -122,8 +128,8 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnConsultar))
+                    .addComponent(jBtnConsultar)
+                    .addComponent(jCboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -140,24 +146,24 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             jBtnOkActionPerformed(null);
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_jTableMouseClicked
 
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
         ClientesDAO usuariosDAO = new ClientesDAO();
         List lista;
         if ((jTxtNome.getText().isEmpty() == false)
-                && (jTxtCidade.getText().isEmpty() == false)) {
-            lista = (List) usuariosDAO.listNomeCidade(jTxtNome.getText(),
-                    (jTxtCidade.getText()));
+                && (jCboGenero.getSelectedIndex() != -1)) {
+            lista = (List) usuariosDAO.listNomeGenero(jTxtNome.getText(),
+                    (jCboGenero.getSelectedIndex()));
         } else if (jTxtNome.getText().isEmpty() == false) {
             lista = (List) usuariosDAO.listNome(jTxtNome.getText());
-        } else if (jTxtCidade.getText().isEmpty() == false) {
-            lista = (List) usuariosDAO.listCidade(jTxtCidade.getText());
+        } else if (jCboGenero.getSelectedIndex() != -1) {
+            lista = (List) usuariosDAO.listGenero(jCboGenero.getSelectedIndex());
         } else {
             lista = (List) usuariosDAO.listAll();
         }
@@ -167,8 +173,373 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnConsultarActionPerformed
 
     private void jBtnOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOk1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // Verifica se há dados na tabela
+            if (jTable.getRowCount() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Não há dados para imprimir!\nRealize uma consulta primeiro.",
+                        "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Configurar o serviço de impressão
+            java.awt.print.PrinterJob job = java.awt.print.PrinterJob.getPrinterJob();
+            job.setJobName("Relatório de Clientes");
+
+            // Criar um Printable personalizado
+            java.awt.print.Printable printable = new java.awt.print.Printable() {
+                @Override
+                public int print(java.awt.Graphics graphics, java.awt.print.PageFormat pageFormat, int pageIndex)
+                        throws java.awt.print.PrinterException {
+
+                    if (pageIndex > 0) {
+                        return NO_SUCH_PAGE;
+                    }
+
+                    java.awt.Graphics2D g2d = (java.awt.Graphics2D) graphics;
+                    g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+                    // Configurar fonte
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+                    // Título
+                    g2d.drawString("RELATÓRIO DE CLIENTES", 100, 50);
+
+                    // Data
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 10));
+                    String data = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
+                    g2d.drawString("Gerado em: " + data, 100, 70);
+
+                    // Filtros aplicados
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.ITALIC, 9));
+                    String filtros = "";
+
+                    // Filtro por Nome
+                    if (!jTxtNome.getText().isEmpty()) {
+                        filtros += "Nome: " + jTxtNome.getText();
+                    }
+
+                    // Filtro por Gênero (combo box) - Converter 0/1 para texto
+                    if (jCboGenero.getSelectedItem() != null) {
+                        Object itemSelecionado = jCboGenero.getSelectedItem();
+                        String generoSelecionado = itemSelecionado.toString().trim();
+
+                        // Converter valor numérico para texto
+                        if (generoSelecionado.equals("0")) {
+                            generoSelecionado = "Masculino";
+                        } else if (generoSelecionado.equals("1")) {
+                            generoSelecionado = "Feminino";
+                        }
+
+                        // Verificar se não é o item padrão ou vazio
+                        if (!generoSelecionado.isEmpty()
+                                && !generoSelecionado.equals("Selecione...")
+                                && !generoSelecionado.equals("Todos")
+                                && !generoSelecionado.equals("0")
+                                && !generoSelecionado.equals("1")) {
+
+                            if (!filtros.isEmpty()) {
+                                filtros += " | ";
+                            }
+                            filtros += "Gênero: " + generoSelecionado;
+                        }
+                    }
+
+                    if (!filtros.isEmpty()) {
+                        g2d.drawString("Filtros: " + filtros, 100, 85);
+                    }
+
+                    // Desenhar tabela
+                    int y = 110;
+
+                    // Cabeçalho
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 11));
+                    g2d.setColor(new java.awt.Color(51, 102, 153));
+
+                    // Calcular largura das colunas
+                    int numColunas = jTable.getColumnCount();
+                    int[] larguras = new int[numColunas];
+                    int larguraTotal = 0;
+
+                    // Ajustar larguras baseado no tipo de dado das colunas
+                    for (int i = 0; i < numColunas; i++) {
+                        String colunaNome = jTable.getColumnName(i).toLowerCase();
+
+                        // Ajustar largura baseada no nome da coluna
+                        if (colunaNome.contains("nome") || colunaNome.contains("cliente")) {
+                            larguras[i] = 150; // Maior largura para nomes
+                        } else if (colunaNome.contains("email")) {
+                            larguras[i] = 180; // Largura maior para emails
+                        } else if (colunaNome.contains("telefone") || colunaNome.contains("celular")) {
+                            larguras[i] = 120; // Largura para telefones
+                        } else if (colunaNome.contains("cpf") || colunaNome.contains("cnpj")) {
+                            larguras[i] = 110; // Largura para documentos
+                        } else if (colunaNome.contains("gênero") || colunaNome.contains("genero")
+                                || colunaNome.contains("sexo")) {
+                            larguras[i] = 100; // Largura para gênero (aumentei para caber "Masculino"/"Feminino")
+                        } else if (colunaNome.contains("data") || colunaNome.contains("nascimento")) {
+                            larguras[i] = 100; // Largura para datas
+                        } else if (colunaNome.contains("endereço") || colunaNome.contains("endereco")) {
+                            larguras[i] = 200; // Largura maior para endereços
+                        } else if (colunaNome.contains("cidade") || colunaNome.contains("estado")) {
+                            larguras[i] = 100; // Largura para cidade/estado
+                        } else {
+                            larguras[i] = 120; // Largura padrão para outras colunas
+                        }
+                        larguraTotal += larguras[i];
+                    }
+
+                    // Desenhar cabeçalhos
+                    int x = 30;
+                    for (int i = 0; i < numColunas; i++) {
+                        String coluna = jTable.getColumnName(i);
+                        g2d.fillRect(x, y - 12, larguras[i], 20);
+                        g2d.setColor(java.awt.Color.WHITE);
+                        g2d.drawString(coluna, x + 5, y);
+                        g2d.setColor(new java.awt.Color(51, 102, 153));
+                        g2d.drawRect(x, y - 12, larguras[i], 20);
+                        x += larguras[i];
+                    }
+
+                    y += 15;
+
+                    // Dados
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 10));
+                    g2d.setColor(java.awt.Color.BLACK);
+
+                    for (int row = 0; row < jTable.getRowCount(); row++) {
+                        x = 30;
+
+                        // Alternar cor de fundo das linhas
+                        if (row % 2 == 0) {
+                            g2d.setColor(new java.awt.Color(240, 240, 240));
+                            g2d.fillRect(30, y - 8, larguraTotal, 15);
+                            g2d.setColor(java.awt.Color.BLACK);
+                        }
+
+                        for (int col = 0; col < numColunas; col++) {
+                            Object valor = jTable.getValueAt(row, col);
+                            String texto = "";
+
+                            if (valor != null) {
+                                String colunaNome = jTable.getColumnName(col).toLowerCase();
+
+                                // Formatar dados específicos
+                                if (colunaNome.contains("cpf")) {
+                                    // Formatar CPF: XXX.XXX.XXX-XX
+                                    String cpf = valor.toString().replaceAll("[^0-9]", "");
+                                    if (cpf.length() == 11) {
+                                        texto = cpf.substring(0, 3) + "."
+                                                + cpf.substring(3, 6) + "."
+                                                + cpf.substring(6, 9) + "-"
+                                                + cpf.substring(9);
+                                    } else {
+                                        texto = valor.toString();
+                                    }
+                                } else if (colunaNome.contains("cnpj")) {
+                                    // Formatar CNPJ: XX.XXX.XXX/XXXX-XX
+                                    String cnpj = valor.toString().replaceAll("[^0-9]", "");
+                                    if (cnpj.length() == 14) {
+                                        texto = cnpj.substring(0, 2) + "."
+                                                + cnpj.substring(2, 5) + "."
+                                                + cnpj.substring(5, 8) + "/"
+                                                + cnpj.substring(8, 12) + "-"
+                                                + cnpj.substring(12);
+                                    } else {
+                                        texto = valor.toString();
+                                    }
+                                } else if (colunaNome.contains("telefone") || colunaNome.contains("celular")) {
+                                    // Formatar telefone: (XX) XXXXX-XXXX
+                                    String tel = valor.toString().replaceAll("[^0-9]", "");
+                                    if (tel.length() == 10) {
+                                        texto = "(" + tel.substring(0, 2) + ") "
+                                                + tel.substring(2, 6) + "-"
+                                                + tel.substring(6);
+                                    } else if (tel.length() == 11) {
+                                        texto = "(" + tel.substring(0, 2) + ") "
+                                                + tel.substring(2, 7) + "-"
+                                                + tel.substring(7);
+                                    } else {
+                                        texto = valor.toString();
+                                    }
+                                } else if (colunaNome.contains("data") || colunaNome.contains("nascimento")) {
+                                    // Tentar formatar data
+                                    try {
+                                        java.util.Date dataObj = null;
+                                        if (valor instanceof java.util.Date) {
+                                            dataObj = (java.util.Date) valor;
+                                        } else if (valor instanceof java.sql.Date) {
+                                            dataObj = new java.util.Date(((java.sql.Date) valor).getTime());
+                                        } else {
+                                            // Tentar parsear string
+                                            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                                            dataObj = sdf.parse(valor.toString());
+                                        }
+                                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                                        texto = sdf.format(dataObj);
+                                    } catch (Exception e) {
+                                        texto = valor.toString();
+                                    }
+                                } else if (colunaNome.contains("gênero") || colunaNome.contains("genero")
+                                        || colunaNome.contains("sexo")) {
+                                    // Converter 0/1 para Masculino/Feminino
+                                    String genero = valor.toString().trim();
+
+                                    if (genero.equals("0") || genero.equalsIgnoreCase("m")
+                                            || genero.equalsIgnoreCase("masculino")) {
+                                        texto = "Masculino";
+                                    } else if (genero.equals("1") || genero.equalsIgnoreCase("f")
+                                            || genero.equalsIgnoreCase("feminino")) {
+                                        texto = "Feminino";
+                                    } else if (genero.equalsIgnoreCase("o") || genero.equalsIgnoreCase("outro")) {
+                                        texto = "Outro";
+                                    } else {
+                                        // Se for outro valor, manter como está (mas com primeira letra maiúscula)
+                                        if (!genero.isEmpty()) {
+                                            texto = genero.substring(0, 1).toUpperCase() + genero.substring(1).toLowerCase();
+                                        } else {
+                                            texto = "Não informado";
+                                        }
+                                    }
+                                } else {
+                                    texto = valor.toString();
+                                }
+                            } else {
+                                texto = "";
+                            }
+
+                            // Truncar texto muito longo (não aplicar a CPF/CNPJ/Telefone/Gênero)
+                            String colunaNome = jTable.getColumnName(col).toLowerCase();
+                            if (!colunaNome.contains("cpf") && !colunaNome.contains("cnpj")
+                                    && !colunaNome.contains("telefone") && !colunaNome.contains("celular")
+                                    && !colunaNome.contains("gênero") && !colunaNome.contains("genero")
+                                    && !colunaNome.contains("sexo") && texto.length() > 30) {
+                                texto = texto.substring(0, 27) + "...";
+                            }
+
+                            g2d.drawString(texto, x + 5, y);
+                            g2d.drawRect(x, y - 8, larguras[col], 15);
+                            x += larguras[col];
+                        }
+                        y += 18;
+
+                        // Verificar se cabe na página
+                        if (y > pageFormat.getImageableHeight() - 50) {
+                            return NO_SUCH_PAGE;
+                        }
+                    }
+
+                    // Rodapé com estatísticas
+                    y = (int) pageFormat.getImageableHeight() - 40;
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.ITALIC, 10));
+                    g2d.drawString("Total de clientes: " + jTable.getRowCount(), 30, y);
+
+                    // Estatísticas de gênero (se houver coluna de gênero)
+                    int masculino = 0;
+                    int feminino = 0;
+                    int outro = 0;
+                    int naoInformado = 0;
+
+                    for (int i = 0; i < jTable.getColumnCount(); i++) {
+                        String colunaNome = jTable.getColumnName(i).toLowerCase();
+                        if (colunaNome.contains("gênero") || colunaNome.contains("genero")
+                                || colunaNome.contains("sexo")) {
+
+                            for (int row = 0; row < jTable.getRowCount(); row++) {
+                                Object valor = jTable.getValueAt(row, i);
+                                if (valor != null) {
+                                    String genero = valor.toString().trim();
+
+                                    // Contar baseado nos valores 0/1 ou texto
+                                    if (genero.equals("0") || genero.equalsIgnoreCase("m")
+                                            || genero.equalsIgnoreCase("masculino")) {
+                                        masculino++;
+                                    } else if (genero.equals("1") || genero.equalsIgnoreCase("f")
+                                            || genero.equalsIgnoreCase("feminino")) {
+                                        feminino++;
+                                    } else if (genero.equalsIgnoreCase("o") || genero.equalsIgnoreCase("outro")) {
+                                        outro++;
+                                    } else if (!genero.isEmpty()) {
+                                        // Se for outro texto, contar como "Outro"
+                                        outro++;
+                                    } else {
+                                        naoInformado++;
+                                    }
+                                } else {
+                                    naoInformado++;
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                    // Exibir estatísticas de gênero
+                    g2d.drawString("Distribuição por gênero:", 30, y + 15);
+
+                    // Calcular porcentagens
+                    int total = jTable.getRowCount();
+                    String estatisticas = "";
+
+                    if (masculino > 0) {
+                        int percentual = (masculino * 100) / total;
+                        estatisticas += "Masculino: " + masculino + " (" + percentual + "%)";
+                    }
+
+                    if (feminino > 0) {
+                        if (!estatisticas.isEmpty()) {
+                            estatisticas += " | ";
+                        }
+                        int percentual = (feminino * 100) / total;
+                        estatisticas += "Feminino: " + feminino + " (" + percentual + "%)";
+                    }
+
+                    if (outro > 0) {
+                        if (!estatisticas.isEmpty()) {
+                            estatisticas += " | ";
+                        }
+                        int percentual = (outro * 100) / total;
+                        estatisticas += "Outro: " + outro + " (" + percentual + "%)";
+                    }
+
+                    if (naoInformado > 0) {
+                        if (!estatisticas.isEmpty()) {
+                            estatisticas += " | ";
+                        }
+                        int percentual = (naoInformado * 100) / total;
+                        estatisticas += "Não informado: " + naoInformado + " (" + percentual + "%)";
+                    }
+
+                    if (!estatisticas.isEmpty()) {
+                        g2d.drawString(estatisticas, 30, y + 30);
+                    }
+
+                    return PAGE_EXISTS;
+                }
+            };
+
+            job.setPrintable(printable);
+
+            // Mostrar diálogo de impressão
+            if (job.printDialog()) {
+                job.print();
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Relatório de clientes enviado para impressão!\n\n"
+                        + "Para salvar como PDF, selecione 'Microsoft Print to PDF'\n"
+                        + "ou outra impressora virtual de PDF.",
+                        "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao gerar relatório: " + e.getMessage(),
+                    "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jBtnOk1ActionPerformed
+
+    private void jCboGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCboGeneroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,11 +602,11 @@ public class JDlgConsultaClientes extends javax.swing.JDialog {
     private javax.swing.JButton jBtnConsultar;
     private javax.swing.JButton jBtnOk;
     private javax.swing.JButton jBtnOk1;
+    private javax.swing.JComboBox<String> jCboGenero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtCidade;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField jTxtNome;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,8 @@
 package view;
 
 import dao.ProdutosDAO;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
 import java.util.ArrayList;
 import java.util.List;
 import tools.Util;
@@ -18,7 +20,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
         ProdutosDAO produtosDAO = new ProdutosDAO();
         List lista = new ArrayList();
         controllerConsultasProdutos.setList(lista);
-        jTable1.setModel(controllerConsultasProdutos);
+        jTable.setModel(controllerConsultasProdutos);
     }
 
     /**
@@ -31,7 +33,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         jBtnOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTxtNome = new javax.swing.JTextField();
@@ -42,7 +44,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,12 +55,12 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                jTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable);
 
         jBtnOk.setText("OK");
         jBtnOk.addActionListener(new java.awt.event.ActionListener() {
@@ -143,12 +145,12 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             jBtnOkActionPerformed(null);
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_jTableMouseClicked
 
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
         ProdutosDAO produtosDAO = new ProdutosDAO();
@@ -170,7 +172,219 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnConsultarActionPerformed
 
     private void jBtnOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOk1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // Verifica se há dados na tabela
+            if (jTable.getRowCount() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Não há dados para imprimir!\nRealize uma consulta primeiro.",
+                        "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Configurar o serviço de impressão
+            java.awt.print.PrinterJob job = java.awt.print.PrinterJob.getPrinterJob();
+            job.setJobName("Relatório de Produtos");
+
+            // Criar um Printable personalizado
+            java.awt.print.Printable printable = new java.awt.print.Printable() {
+                @Override
+                public int print(java.awt.Graphics graphics, java.awt.print.PageFormat pageFormat, int pageIndex)
+                        throws java.awt.print.PrinterException {
+
+                    if (pageIndex > 0) {
+                        return NO_SUCH_PAGE;
+                    }
+
+                    java.awt.Graphics2D g2d = (java.awt.Graphics2D) graphics;
+                    g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+                    // Configurar fonte
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 16));
+
+                    // Título
+                    g2d.drawString("RELATÓRIO DE PRODUTOS", 100, 50);
+
+                    // Data
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 10));
+                    String data = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
+                    g2d.drawString("Gerado em: " + data, 100, 70);
+
+                    // Filtros aplicados
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.ITALIC, 9));
+                    String filtros = "";
+
+                    // Filtro por Nome
+                    if (!jTxtNome.getText().isEmpty()) {
+                        filtros += "Nome: " + jTxtNome.getText();
+                    }
+
+                    // Filtro por Valor maior que
+                    if (!jTxtValor.getText().isEmpty()) {
+                        try {
+                            double valor = Double.parseDouble(jTxtValor.getText());
+                            if (!filtros.isEmpty()) {
+                                filtros += " | ";
+                            }
+                            filtros += "Valor > R$ " + String.format("%.2f", valor);
+                        } catch (NumberFormatException e) {
+                            // Ignorar se o valor não for numérico
+                        }
+                    }
+
+                    if (!filtros.isEmpty()) {
+                        g2d.drawString("Filtros: " + filtros, 100, 85);
+                    }
+
+                    // Desenhar tabela
+                    int y = 110;
+
+                    // Cabeçalho
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 11));
+                    g2d.setColor(new java.awt.Color(51, 102, 153));
+
+                    // Calcular largura das colunas
+                    int numColunas = jTable.getColumnCount();
+                    int[] larguras = new int[numColunas];
+                    int larguraTotal = 0;
+
+                    // Ajustar larguras baseado no conteúdo (se necessário)
+                    for (int i = 0; i < numColunas; i++) {
+                        String colunaNome = jTable.getColumnName(i);
+
+                        // Ajustar largura baseada no nome da coluna ou tipo de dado
+                        if (colunaNome.toLowerCase().contains("valor")
+                                || colunaNome.toLowerCase().contains("preço")
+                                || colunaNome.toLowerCase().contains("valor")) {
+                            larguras[i] = 100; // Menor largura para valores
+                        } else if (colunaNome.toLowerCase().contains("nome")
+                                || colunaNome.toLowerCase().contains("descrição")) {
+                            larguras[i] = 150; // Maior largura para nomes/descrições
+                        } else {
+                            larguras[i] = 120; // Largura padrão
+                        }
+                        larguraTotal += larguras[i];
+                    }
+
+                    // Desenhar cabeçalhos
+                    int x = 30;
+                    for (int i = 0; i < numColunas; i++) {
+                        String coluna = jTable.getColumnName(i);
+                        g2d.fillRect(x, y - 12, larguras[i], 20);
+                        g2d.setColor(java.awt.Color.WHITE);
+                        g2d.drawString(coluna, x + 5, y);
+                        g2d.setColor(new java.awt.Color(51, 102, 153));
+                        g2d.drawRect(x, y - 12, larguras[i], 20);
+                        x += larguras[i];
+                    }
+
+                    y += 15;
+
+                    // Dados
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 10));
+                    g2d.setColor(java.awt.Color.BLACK);
+
+                    for (int row = 0; row < jTable.getRowCount(); row++) {
+                        x = 30;
+
+                        // Alternar cor de fundo das linhas
+                        if (row % 2 == 0) {
+                            g2d.setColor(new java.awt.Color(240, 240, 240));
+                            g2d.fillRect(30, y - 8, larguraTotal, 15);
+                            g2d.setColor(java.awt.Color.BLACK);
+                        }
+
+                        for (int col = 0; col < numColunas; col++) {
+                            Object valor = jTable.getValueAt(row, col);
+                            String texto = "";
+
+                            // Formatar valores numéricos (assumindo que colunas de valor contêm números)
+                            if (valor != null) {
+                                String colunaNome = jTable.getColumnName(col).toLowerCase();
+
+                                if (colunaNome.contains("valor")
+                                        || colunaNome.contains("preço")
+                                        || colunaNome.contains("custo")) {
+                                    try {
+                                        // Tentar formatar como moeda
+                                        double numValor = Double.parseDouble(valor.toString());
+                                        texto = String.format("R$ %.2f", numValor);
+                                    } catch (NumberFormatException e) {
+                                        texto = valor.toString();
+                                    }
+                                } else {
+                                    texto = valor.toString();
+                                }
+                            }
+
+                            // Truncar texto muito longo (apenas para colunas de texto)
+                            String colunaNome = jTable.getColumnName(col).toLowerCase();
+                            if (!colunaNome.contains("valor")
+                                    && !colunaNome.contains("preço")
+                                    && !colunaNome.contains("custo")
+                                    && texto.length() > 25) {
+                                texto = texto.substring(0, 22) + "...";
+                            }
+
+                            g2d.drawString(texto, x + 5, y);
+                            g2d.drawRect(x, y - 8, larguras[col], 15);
+                            x += larguras[col];
+                        }
+                        y += 18;
+
+                        // Verificar se cabe na página
+                        if (y > pageFormat.getImageableHeight() - 50) {
+                            return NO_SUCH_PAGE;
+                        }
+                    }
+
+                    // Rodapé com totais
+                    y = (int) pageFormat.getImageableHeight() - 40;
+                    g2d.setFont(new java.awt.Font("Arial", java.awt.Font.ITALIC, 10));
+                    g2d.drawString("Total de produtos: " + jTable.getRowCount(), 30, y);
+
+                    // Calcular valor total dos produtos (se houver coluna de valor)
+                    double valorTotal = 0;
+                    for (int i = 0; i < jTable.getColumnCount(); i++) {
+                        if (jTable.getColumnName(i).toLowerCase().contains("valor")
+                                || jTable.getColumnName(i).toLowerCase().contains("preço")) {
+                            for (int row = 0; row < jTable.getRowCount(); row++) {
+                                Object valor = jTable.getValueAt(row, i);
+                                if (valor != null) {
+                                    try {
+                                        valorTotal += Double.parseDouble(valor.toString());
+                                    } catch (NumberFormatException e) {
+                                        // Ignorar valores não numéricos
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                    g2d.drawString("Valor total: R$ " + String.format("%.2f", valorTotal), 30, y + 15);
+
+                    return PAGE_EXISTS;
+                }
+            };
+
+            job.setPrintable(printable);
+
+            // Mostrar diálogo de impressão
+            if (job.printDialog()) {
+                job.print();
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Relatório de produtos enviado para impressão!\n\n"
+                        + "Para salvar como PDF, selecione 'Microsoft Print to PDF'\n"
+                        + "ou outra impressora virtual de PDF.",
+                        "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Erro ao gerar relatório: " + e.getMessage(),
+                    "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jBtnOk1ActionPerformed
 
     /**
@@ -229,7 +443,7 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtValor;
     // End of variables declaration//GEN-END:variables

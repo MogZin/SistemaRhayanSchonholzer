@@ -196,6 +196,12 @@ public class JDlgVendedor extends javax.swing.JDialog {
         jLabel7.setDisplayedMnemonic('s');
         jLabel7.setText("Salário");
 
+        rps_jTxtSalario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rps_jTxtSalarioActionPerformed(evt);
+            }
+        });
+
         rps_jBtnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/incluir.png"))); // NOI18N
         rps_jBtnIncluir.setText("Incluir");
         rps_jBtnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -396,6 +402,10 @@ public class JDlgVendedor extends javax.swing.JDialog {
         jDlgVendedorPesquisar.setTelaAnterior(this);
         jDlgVendedorPesquisar.setVisible(true);
     }//GEN-LAST:event_rps_jBtnPesquisarActionPerformed
+
+    private void rps_jTxtSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jTxtSalarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rps_jTxtSalarioActionPerformed
 
     /**
      * @param args the command line arguments

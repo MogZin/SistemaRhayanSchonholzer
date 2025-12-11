@@ -92,7 +92,7 @@
                       <Component id="rps_jBtnExcluirProd" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel5" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="rps_jTxtTotal" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="rps_jTxtTotal" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

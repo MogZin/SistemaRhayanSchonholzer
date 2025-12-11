@@ -21,6 +21,49 @@ public class JDlgConsultaProdutos extends javax.swing.JDialog {
         List lista = new ArrayList();
         controllerConsultasProdutos.setList(lista);
         jTable.setModel(controllerConsultasProdutos);
+
+        // === FORMATAÇÃO AUTOMÁTICA DE SALDO COM R$ ===
+        jTxtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                // Remove tudo que não for número
+                String texto = jTxtValor.getText().replaceAll("[^0-9]", "");
+
+                if (texto.isEmpty()) {
+                    jTxtValor.setText("R$ 0,00");
+                    return;
+                }
+
+                // Garante pelo menos 3 dígitos (para manter 2 casas decimais)
+                while (texto.length() < 3) {
+                    texto = "0" + texto;
+                }
+
+                try {
+                    double valor = Double.parseDouble(texto) / 100.0;
+                    java.text.DecimalFormat df = new java.text.DecimalFormat("#,##0.00");
+                    jTxtValor.setText("R$ " + df.format(valor));
+                } catch (NumberFormatException e) {
+                    // em caso de erro de conversão, reseta o campo
+                    jTxtValor.setText("R$ 0,00");
+                }
+            }
+
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                // bloqueia qualquer caractere que não seja número
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    evt.consume();
+                }
+            }
+        });
+
+        // inicializa o campo bonitinho
+        jTxtValor.setText("R$ 0,00");
+        jTxtValor.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTxtValor.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        jTxtValor.setForeground(new java.awt.Color(34, 139, 34)); // verde "saldo positivo"
     }
 
     private void iniciarRelogio(String nomeUsuario) {

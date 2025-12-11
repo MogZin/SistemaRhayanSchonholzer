@@ -567,12 +567,11 @@ public class JDlgVendas extends javax.swing.JDialog {
                 rpsVendasProdutos.setRpsVendas(rpsVendas);
                 vendasProdutosDAO.insert(rpsVendasProdutos);
             }
-
-            Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
-            Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
-            Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
-            controllerVenProd.setList(new ArrayList());
         }
+        Util.habilitar(false, rps_jBtnAlterarProd, rps_jBtnExcluirProd, rps_jBtnIncluirProd, rps_jBtnConfirmar, rps_jBtnCancelar, rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+        Util.habilitar(true, rps_jBtnIncluir, rps_jBtnExcluir, rps_jBtnAlterar, rps_jBtnPesquisar);
+        Util.limpar(rps_jTxtCodigo, rps_jFmtDataVenda, rps_jCboClientes, rps_jTxtDesconto, rps_jTxtTotal, rps_jCboVendedor, rps_jCboFormaPagamento);
+        controllerVenProd.setList(new ArrayList());
     }//GEN-LAST:event_rps_jBtnConfirmarActionPerformed
 
     private void rps_jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rps_jBtnCancelarActionPerformed
